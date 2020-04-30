@@ -8,4 +8,4 @@ start_at = Time.now
 GiteePack.execute(base, head)
 end_at = Time.now
 
-puts "\033[32mComplete! cost time: #{end_at - start_at} seconds.\033[0m"
+GiteePack.logger.success "Complete! cost time: #{end_at - start_at} seconds."

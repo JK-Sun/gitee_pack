@@ -6,8 +6,8 @@ module GiteePack
       def mkdir_upgrade
         rm_dir(upgrade_dir)
         FileUtils.mkdir_p(upgrade_files_dir)
-        puts "mkdir #{upgrade_dir}"
-        puts "mkdir #{upgrade_files_dir}"
+        GiteePack.logger.debug "mkdir #{upgrade_dir}"
+        GiteePack.logger.debug "mkdir #{upgrade_files_dir}"
       end
 
       def upgrade_dir
@@ -21,7 +21,7 @@ module GiteePack
       def rm_dir(dir)
         if Dir.exist?(dir)
           `rm -rf #{dir}`
-          puts "rm -rf #{dir}"
+          GiteePack.logger.debug "rm -rf #{dir}"
         end
       end
     end

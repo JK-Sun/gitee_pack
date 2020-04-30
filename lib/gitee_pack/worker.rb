@@ -17,6 +17,7 @@ module GiteePack
 
       Filer.g_diff_file(@diff.diff_files_with_status)
       Filer.g_delete_file(@diff.delete_files)
+      Filer.cp_update_file
 
       puts_empty_folders
       puts_delete_files
@@ -26,15 +27,15 @@ module GiteePack
 
     def puts_delete_files
       unless @diff.delete_files.empty?
-        puts "\n\033[33mDelete Files:\n"
-        puts "#{@diff.delete_files.join("\n")}\033[0m"
+        GiteePack.logger.warn "\nDelete Files:"
+        GiteePack.logger.warn "#{@diff.delete_files.join("\n")}"
       end
     end
 
     def puts_empty_folders
       unless @diff.empty_folders.empty?
-        puts "\n\033[33mEmpty Folders:\n"
-        puts "#{@diff.empty_folders.join("\n")}\033[0m"
+        GiteePack.logger.warn "\nEmpty Folders:"
+        GiteePack.logger.warn "#{@diff.empty_folders.join("\n")}"
       end
     end
   end

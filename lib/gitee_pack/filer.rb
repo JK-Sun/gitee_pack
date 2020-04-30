@@ -6,7 +6,7 @@ module GiteePack
           dirname = File.join(Folder.upgrade_files_dir, File.dirname(file))
           FileUtils.mkdir_p dirname
           FileUtils.cp file, dirname
-          puts "cp #{file} #{dirname}"
+          GiteePack.logger.debug "cp #{file} #{dirname}"
         end
       end
 
@@ -14,13 +14,19 @@ module GiteePack
         dirname = File.join(Folder.upgrade_files_dir, 'public/webpacks')
         FileUtils.mkdir_p dirname
         FileUtils.cp_r 'public/webpacks/.', dirname
-        puts "cp -r public/webpacks/. #{dirname}"
+        GiteePack.logger.debug "cp -r public/webpacks/. #{dirname}"
+      end
+
+      def cp_update_file
+        filepath = File.join(File.dirname(__FILE__), 'exe/update.sh')
+        FileUtils.cp filepath, Folder.upgrade_dir
+        GiteePack.logger.debug "cp #{filepath} #{Folder.upgrade_dir}"
       end
 
       def g_file(path, content = [])
         File.open(path, 'w') do |f|
           f.write("#{content.join("\n")}\n")
-        end
+        end unless content.empty?
       end
 
       def g_delete_file(content = [])

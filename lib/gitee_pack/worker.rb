@@ -10,7 +10,7 @@ module GiteePack
       Folder.mkdir_upgrade
       Filer.cp_diff_files(@diff.cp_files)
 
-      if @diff.precompile?
+      if @diff.has_webpack_file?
         Precompile.with_webpack
         Filer.cp_webpack_files
       end

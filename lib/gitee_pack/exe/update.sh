@@ -19,8 +19,14 @@ if [ ! -d $APP_PATH ] || [ ! -d $CONFIG_PATH ] || [ ! -d $DB_PATH ]; then
   exit 1
 fi
 
-cp -r files/* $GITEE_PATH
-echo cp -r files/\* $GITEE_PATH
+WEBPACK_PATH=$GITEE_PATH/public/webpacks
+if [ -d files/public/webpacks  ] && [ -d $WEBPACK_PATH  ]; then
+  rm -rf $WEBPACK_PATH
+  echo rm -rf $WEBPACK_PATH
+fi
+
+cp -rf files/* $GITEE_PATH
+echo cp -rf files/\* $GITEE_PATH
 
 DELETE_FILE=delete.txt
 if [ -f $DELETE_FILE ]; then

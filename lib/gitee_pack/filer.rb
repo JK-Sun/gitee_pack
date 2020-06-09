@@ -18,7 +18,7 @@ module GiteePack
       end
 
       def cp_update_file
-        filepath = File.join(File.dirname(__FILE__), 'exe/update.sh')
+        filepath = File.join(File.expand_path('../../../', __FILE__), 'exe/update.sh')
         FileUtils.cp filepath, Folder.upgrade_dir
         GiteePack.logger.debug "cp #{filepath} #{Folder.upgrade_dir}"
       end

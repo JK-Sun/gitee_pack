@@ -36,6 +36,10 @@ module GiteePack
       def g_diff_file(content = [])
         g_file(File.join(Folder.upgrade_dir, 'diff.txt'), content)
       end
+
+      def g_commit_file(content = [])
+        g_file(File.join(Folder.upgrade_dir, 'commit.txt'), content)
+      end
     end
   end
 end

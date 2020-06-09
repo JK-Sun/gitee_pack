@@ -17,6 +17,7 @@ module GiteePack
 
       Filer.g_diff_file(@diff.diff_files_with_status)
       Filer.g_delete_file(@diff.delete_files)
+      Filer.g_commit_file(["old: #{@base}", "new: #{@head}"])
       Filer.cp_update_file
 
       puts_empty_folders

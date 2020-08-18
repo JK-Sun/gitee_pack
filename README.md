@@ -51,3 +51,10 @@ gitee-path: gitee-premium的绝对路径
 $ ./update.sh /home/gite/gitee-premium/gitee
 ```
 
+## TODO
+
+- 支持中文文件名打包
+- 支持gem打包
+- 源码中记录版本信息功能
+- ~~备份功能~~
+

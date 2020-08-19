@@ -56,5 +56,8 @@ $ ./update.sh /home/gite/gitee-premium/gitee
 - 支持中文文件名打包
 - 支持gem打包
 - 源码中记录版本信息功能
-- ~~备份功能~~
+- ~~支持代码文件打包~~
+- ~~支持webpacks打包~~
+- ~~支持部署备份功能~~
+- ~~支持assets打包~~
 

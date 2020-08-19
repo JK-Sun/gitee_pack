@@ -17,6 +17,13 @@ module GiteePack
         GiteePack.logger.debug "cp -r public/webpacks/. #{dirname}"
       end
 
+      def cp_asset_files
+        dirname = File.join(Folder.upgrade_files_dir, 'public/assets')
+        FileUtils.mkdir_p dirname
+        FileUtils.cp_r 'public/assets/.', dirname
+        GiteePack.logger.debug "cp -r public/assets/. #{dirname}"
+      end
+
       def cp_update_file
         filepath = File.join(File.expand_path('../../../', __FILE__), 'exe/update.sh')
         FileUtils.cp filepath, Folder.upgrade_dir

@@ -15,6 +15,11 @@ module GiteePack
         Filer.cp_webpack_files
       end
 
+      if @diff.has_asset_file?
+        Precompile.with_asset
+        Filer.cp_asset_files
+      end
+
       Filer.g_diff_file(@diff.diff_files_with_status)
       Filer.g_delete_file(@diff.delete_files)
       Filer.g_commit_file(["old: #{@base}", "new: #{@head}"])

@@ -1,6 +1,6 @@
 module GiteePack
   class Diff
-    attr_reader :empty_folders, :delete_files, :cp_files, :webpack_files
+    attr_reader :empty_folders, :delete_files, :cp_files, :webpack_files, :asset_files
 
     IGNORE_FILES = [
       'config/gitee.yml',
@@ -17,6 +17,7 @@ module GiteePack
       @delete_files  = []
       @cp_files      = []
       @webpack_files = []
+      @asset_files   = []
 
       init_list_by_files
     end
@@ -39,6 +40,10 @@ module GiteePack
       !webpack_files.empty?
     end
 
+    def has_asset_file?
+      !asset_files.empty?
+    end
+
     private
 
     def init_list_by_files
@@ -58,6 +63,8 @@ module GiteePack
 
         if file.start_with?('app/assets/javascripts/webpack')
           @webpack_files << file
+        elsif file.start_with?('app/assets')
+          @asset_files << file
         end
 
         if Dir.exist?(file)

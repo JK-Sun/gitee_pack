@@ -39,6 +39,13 @@ if [ -d files/public/webpacks  ] && [ -d $WEBPACK_PATH  ]; then
   echo rm -rf $WEBPACK_PATH
 fi
 
+# Delete assets dir
+ASSET_PATH=$GITEE_PATH/public/assets
+if [ -d files/public/assets  ] && [ -d $ASSET_PATH  ]; then
+  rm -rf $ASSET_PATH
+  echo rm -rf $ASSET_PATH
+fi
+
 # Delete files with delete.txt
 DELETE_FILE=delete.txt
 if [ -f $DELETE_FILE ]; then

@@ -51,13 +51,20 @@ gitee-path: gitee-premium的绝对路径
 $ ./update.sh /home/gite/gitee-premium/gitee
 ```
 
+## 常见问题
+
+1. 执行 `git status`、`git diff` 等命令，中文名文件显示为乱码，导致中文名文件无法打包成功。
+
+```shell
+$ git config --global core.quotepath false
+```
+
 ## TODO
 
-- 支持中文文件名打包
 - 支持gem打包
 - 源码中记录版本信息功能
 - ~~支持代码文件打包~~
 - ~~支持webpacks打包~~
 - ~~支持部署备份功能~~
 - ~~支持assets打包~~
-
+- ~~支持中文文件名打包~~

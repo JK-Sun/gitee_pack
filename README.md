@@ -66,3 +66,4 @@ $ git config --global core.quotepath false
 - ~~支持部署备份功能~~
 - ~~支持assets打包~~
 - ~~支持中文文件名打包~~
+- ~~支持备份代码过滤tmp目录~~

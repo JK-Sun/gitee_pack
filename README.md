@@ -32,8 +32,6 @@ $ gitee_pack a9b6296 6ac0f97
 
 ### 部署
 
-先备份原有文件
-
 在升级包中执行update.sh脚本，一键自动部署
 
 ```shell

@@ -4,8 +4,6 @@
 
 ## 安装
 
-在gitee-premium目录执行：
-
 ```shell
 $ gem install gitee_pack
 ```

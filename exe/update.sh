@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
 # Check parameter
 GITEE_PATH=$1
 if [ ! $GITEE_PATH ]; then
@@ -22,15 +24,18 @@ if [ ! -d $APP_PATH ] || [ ! -d $CONFIG_PATH ] || [ ! -d $DB_PATH ]; then
 fi
 
 # Backup
-BACKUP_DIR="$(dirname $GITEE_PATH)/backup/`date "+%Y%m%d%H%M%S"`"
+BACKUP_DIR="$(dirname $GITEE_PATH)/backup/`date "+%Y%m%d%H%M%S"`/$(basename $GITEE_PATH)"
 echo mkdir -p $BACKUP_DIR
 mkdir -p $BACKUP_DIR
-echo cp -r $GITEE_PATH $BACKUP_DIR
-cp -r $GITEE_PATH $BACKUP_DIR
+echo "cd $GITEE_PATH && tar --exclude tmp -cf - * | tar -xf - -C $BACKUP_DIR"
+cd $GITEE_PATH && tar --exclude tmp -cf - * | tar -xf - -C $BACKUP_DIR
 if [ $? -ne 0 ]; then
   printf "\033[31mERROR: Gitee backup failed.\033[0m\n"
   exit 1
 fi
+
+echo cd $SCRIPT_DIR
+cd $SCRIPT_DIR
 
 # Delete webpacks dir
 WEBPACK_PATH=$GITEE_PATH/public/webpacks

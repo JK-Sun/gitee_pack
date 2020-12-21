@@ -30,6 +30,17 @@ $ gitee_pack a9b6296 6ac0f97
 
 执行后会在当前目录下生成一个增量文件的升级包，例如 upgrade-20200430
 
+升级包目录结构说明：
+
+```
+upgrade-20200430
+├── commit.txt         // 记录 base、head 的 CommitID
+├── diff.txt           // 记录 base 和 head 之间的所有改动文件名称
+├── delete.txt         // 记录 base 和 head 之间被删除的文件名称
+├── files              // 用于存放代码文件的目录
+└── update.sh          // 部署脚本，更新代码时使用
+```
+
 ### 部署
 
 在升级包中执行update.sh脚本，一键自动部署

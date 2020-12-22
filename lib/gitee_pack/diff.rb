@@ -4,7 +4,6 @@ module GiteePack
 
     IGNORE_FILES = [
       'config/gitee.yml',
-      'config/gitee.yml.example',
       'config/database.yml',
       'config/startup.yml',
       'app/assets/javascripts/webpack/webide'

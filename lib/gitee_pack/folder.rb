@@ -24,6 +24,14 @@ module GiteePack
           GiteePack.logger.debug "rm -rf #{dir}"
         end
       end
+
+      def webpacks_dir
+        'public/webpacks/'
+      end
+
+      def assets_dir
+        'public/assets/'
+      end
     end
   end
 end

@@ -4,13 +4,17 @@ module GiteePack
       def with_webpack
         GiteePack.logger.info '[Compiling] webpack files is compiling, please wait ...'
         Folder.rm_dir('public/webpacks')
-        `npm run build-vendor && npm run f-build`
+        cmd = 'npm run build-vendor && npm run f-build'
+        GiteePack.logger.debug cmd
+        `#{cmd}`
       end
 
       def with_asset
         GiteePack.logger.info '[Compiling] asset files is compiling, please wait ...'
         Folder.rm_dir('public/assets')
-        `bundle exec rake assets:precompile:all RAILS_ENV=production RAILS_GROUPS=assets`
+        cmd = 'RAILS_ENV=production bundle exec rake assets:precompile'
+        GiteePack.logger.debug cmd
+        `#{cmd}`
       end
     end
   end

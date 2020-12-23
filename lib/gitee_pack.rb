@@ -6,6 +6,7 @@ require 'gitee_pack/folder'
 require 'gitee_pack/filer'
 require 'gitee_pack/precompile'
 require 'gitee_pack/logger'
+require 'gitee_pack/verifier'
 require 'gitee_pack/status'
 require 'gitee_pack/worker'
 

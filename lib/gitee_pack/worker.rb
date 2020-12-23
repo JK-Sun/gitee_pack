@@ -1,9 +1,10 @@
 module GiteePack
   class Worker
     def initialize(base, head)
-      @base = base
-      @head = head
-      @diff = Diff.new(@base, @head)
+      @base   = base
+      @head   = head
+      @diff   = Diff.new(@base, @head)
+      @errors = []
     end
 
     def execute
@@ -20,6 +21,8 @@ module GiteePack
 
       puts_empty_folders
       puts_deleted_files
+
+      verify_upgrade_package
     end
 
     private
@@ -44,6 +47,52 @@ module GiteePack
 
         Filer.cp_asset_files
       end
+    end
+
+    def verify_upgrade_package
+      GiteePack.logger.info '[Verifying] package is verifying, please wait ...'
+
+      verify_digest_with_cp_files
+      verify_digest_with_webpacks_dir
+      verify_digest_with_assets_dir
+
+      unless @errors.empty?
+        exit GiteePack::Status::ERR_VERIFY_PACKAGE
+      end
+    end
+
+    def verify_digest_with_cp_files
+      @diff.cp_files.each do |file|
+        from = File.join(Folder.upgrade_files_dir, file)
+        to = file
+        result, message = GiteePack::Verifier.new.execute(from, to)
+        GiteePack.logger.debug message
+        set_errors(result, message) unless result
+      end
+    end
+
+    def verify_digest_with_webpacks_dir
+      if @diff.has_webpack_file?
+        from = File.join(GiteePack::Folder.upgrade_files_dir, GiteePack::Folder.webpacks_dir)
+        to = GiteePack::Folder.webpacks_dir
+        result, message = GiteePack::Verifier.new.execute(from, to)
+        GiteePack.logger.debug message
+        set_errors(result, message) unless result
+      end
+    end
+
+    def verify_digest_with_assets_dir
+      if @diff.has_asset_file?
+        from = File.join(GiteePack::Folder.upgrade_files_dir, GiteePack::Folder.assets_dir)
+        to = GiteePack::Folder.assets_dir
+        result, message = GiteePack::Verifier.new.execute(from, to)
+        GiteePack.logger.debug message
+        set_errors(result, message) unless result
+      end
+    end
+
+    def set_errors(result, message)
+      @errors << { result: result, message: message }
     end
 
     def puts_deleted_files

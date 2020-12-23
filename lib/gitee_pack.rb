@@ -8,13 +8,14 @@ require 'gitee_pack/precompile'
 require 'gitee_pack/logger'
 require 'gitee_pack/verifier'
 require 'gitee_pack/status'
+require 'gitee_pack/parser'
 require 'gitee_pack/worker'
 
 module GiteePack
   class CmdError < StandardError; end
 
   def self.execute(base, head, options = {})
-    Worker.new(base, head).execute
+    Worker.new(base, head, options).execute
   end
 
   def self.logger

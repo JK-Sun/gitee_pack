@@ -2,19 +2,10 @@
 
 require 'gitee_pack'
 
-HELP_CMD = ['-v', '-h', '--help'].freeze
-
-if HELP_CMD.include?(ARGV[0])
-  GiteePack.logger.debug "Usage: #{File.basename($0)} [base] [head]"
-  GiteePack.logger.debug "Version: #{GiteePack::VERSION}"
-  exit 0
-end
-
-
 base, head = ARGV[0], ARGV[1]
 
 start_at = Time.now
-GiteePack.execute(base, head)
+GiteePack.execute(base, head, { ARGV: ARGV })
 end_at = Time.now
 
 GiteePack.logger.success "Complete! cost time: #{end_at - start_at} seconds."

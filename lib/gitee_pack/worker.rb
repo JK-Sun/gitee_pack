@@ -1,10 +1,11 @@
 module GiteePack
   class Worker
-    def initialize(base, head)
-      @base   = base
-      @head   = head
-      @diff   = Diff.new(@base, @head)
-      @errors = []
+    def initialize(base, head, options = {})
+      @options = GiteePack::Parser.new.execute(options[:ARGV])
+      @base    = base
+      @head    = head
+      @diff    = Diff.new(@base, @head)
+      @errors  = []
     end
 
     def execute
@@ -28,7 +29,7 @@ module GiteePack
     private
 
     def compile_webpack_files_and_cp
-      if @diff.has_webpack_file?
+      if process_webpack?
         Precompile.with_webpack
         unless GiteePack::Status.success?($?)
           exit GiteePack::Status::ERR_COMPILE_WEBPACK
@@ -39,7 +40,7 @@ module GiteePack
     end
 
     def compile_asset_files_and_cp
-      if @diff.has_asset_file?
+      if process_asset?
         Precompile.with_asset
         unless GiteePack::Status.success?($?)
           exit GiteePack::Status::ERR_COMPILE_ASSET
@@ -72,7 +73,7 @@ module GiteePack
     end
 
     def verify_digest_with_webpacks_dir
-      if @diff.has_webpack_file?
+      if process_webpack?
         from = File.join(GiteePack::Folder.upgrade_files_dir, GiteePack::Folder.webpacks_dir)
         to = GiteePack::Folder.webpacks_dir
         result, message = GiteePack::Verifier.new.execute(from, to)
@@ -82,13 +83,21 @@ module GiteePack
     end
 
     def verify_digest_with_assets_dir
-      if @diff.has_asset_file?
+      if process_asset?
         from = File.join(GiteePack::Folder.upgrade_files_dir, GiteePack::Folder.assets_dir)
         to = GiteePack::Folder.assets_dir
         result, message = GiteePack::Verifier.new.execute(from, to)
         GiteePack.logger.debug message
         set_errors(result, message) unless result
       end
+    end
+
+    def process_webpack?
+      !@options[:skip_webpack_compile] && @diff.has_webpack_file?
+    end
+
+    def process_asset?
+      !@options[:skip_asset_compile] && @diff.has_asset_file?
     end
 
     def set_errors(result, message)

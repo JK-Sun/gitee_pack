@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    gitee_pack (1.5.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gitee_pack!
+
+BUNDLED WITH
+   2.1.2

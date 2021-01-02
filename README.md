@@ -58,8 +58,10 @@ Specific options:
     -v, --version                    Show version info.
 ```
 
-`--skip-compile-asset`   当有前端文件改动时，跳过 asset 资源文件编译
+`--skip-compile-asset`   当有 asset 文件改动时，跳过 asset 资源文件编译
+
 `--skip-compile-webpack` 当有 vue 文件改动时，跳过 npm 资源文件编译
+
 `--skip-package-gem`     当有 gem 改动时，跳过 gem 打包
 
 ### 部署

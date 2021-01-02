@@ -32,6 +32,10 @@ module GiteePack
       def assets_dir
         'public/assets/'
       end
+
+      def bundle_cache_dir
+        'vendor/cache/'
+      end
     end
   end
 end

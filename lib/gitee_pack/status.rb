@@ -2,6 +2,7 @@ module GiteePack
   class Status
     ERR_COMPILE_WEBPACK = 100
     ERR_COMPILE_ASSET   = 101
+    ERR_COMPILE_GEM     = 102
     ERR_VERIFY_PACKAGE  = 200
 
     class << self

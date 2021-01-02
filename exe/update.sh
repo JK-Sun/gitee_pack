@@ -14,15 +14,6 @@ if [ $FINAL = '/' ]; then
   GITEE_PATH=${GITEE_PATH%?}
 fi
 
-# Check path
-APP_PATH=$GITEE_PATH/app
-CONFIG_APTH=$GITEE_PATH/config
-DB_APTH=$GITEE_PATH/db
-if [ ! -d $APP_PATH ] || [ ! -d $CONFIG_PATH ] || [ ! -d $DB_PATH ]; then
-  printf "\033[31mERROR: $GITEE_PATH is not the gitee-path.\033[0m\n"
-  exit 1
-fi
-
 # Backup
 BACKUP_DIR="$(dirname $GITEE_PATH)/backup/`date "+%Y%m%d%H%M%S"`/$(basename $GITEE_PATH)"
 echo mkdir -p $BACKUP_DIR
@@ -49,6 +40,13 @@ ASSET_PATH=$GITEE_PATH/public/assets
 if [ -d files/public/assets  ] && [ -d $ASSET_PATH  ]; then
   rm -rf $ASSET_PATH
   echo rm -rf $ASSET_PATH
+fi
+
+# Delete bundle cache dir
+BUNDLE_CACHE_PATH=$GITEE_PATH/vendor/cache
+if [ -d files/vendor/cache  ] && [ -d $BUNDLE_CACHE_PATH  ]; then
+  rm -rf $BUNDLE_CACHE_PATH
+  echo rm -rf $BUNDLE_CACHE_PATH
 fi
 
 # Delete files with delete.txt

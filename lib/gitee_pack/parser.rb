@@ -3,17 +3,23 @@ require 'optparse'
 module GiteePack
   class Parser
     def execute(args)
-      options = {}
-      options[:skip_asset_compile]   = false
-      options[:skip_webpack_compile] = false
+      options = default_options
       OptionParser.new do |opts|
         opts.banner = 'Usage: gitee_pack BASE HEAD [options]'
 
         opts.separator ''
         opts.separator 'Specific options:'
 
-        opts.on('-S COMPILE_TYPE', '--skip-compile COMPILE_TYPE', 'Skip compile. aption: all, asset or webpack.') do |value|
-          options.merge! skip_compile_options(value)
+        opts.on('--skip-compile-asset', 'Skip compile asset.') do
+          options[:skip_asset_compile] = true
+        end
+
+        opts.on('--skip-compile-webpack', 'Skip compile webpack.') do
+          options[:skip_webpack_compile] = true
+        end
+
+        opts.on('--skip-package-gem', 'Skip package gem.') do
+          options[:skip_gem_compile] = true
         end
 
         opts.on_tail('-h', '--help', 'Show this message.') do
@@ -32,18 +38,12 @@ module GiteePack
 
     private
 
-    def skip_compile_options(type)
-      options = {}
-      case type.to_s
-      when 'all'
-        options[:skip_asset_compile]   = true
-        options[:skip_webpack_compile] = true
-      when 'asset'
-        options[:skip_asset_compile]   = true
-      when 'webpack'
-        options[:skip_webpack_compile] = true
-      end
-      options
+    def default_options
+      {
+        skip_asset_compile:   false,
+        skip_webpack_compile: false,
+        skip_gem_compile:     false
+      }
     end
   end
 end

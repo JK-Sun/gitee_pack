@@ -64,9 +64,18 @@ Specific options:
 
 `--skip-package-gem`     当有 gem 改动时，跳过 gem 打包
 
+### 错误值
+
+执行 gitee_pack 命令，错误值解释如下
+
+- `100` vue 资源文件编译失败
+- `101` asset 资源文件编译失败
+- `102` gem 打包失败
+- `200` 升级包不完整
+
 ### 部署
 
-在升级包中执行update.sh脚本，一键自动部署
+在升级包中执行 update.sh 脚本，一键自动部署
 
 ```shell
 $ cd upgrade-20200430

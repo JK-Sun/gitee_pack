@@ -1,6 +1,6 @@
 # GiteePack
 
-一个GiteePremium增量打包工具
+一个 GiteePremium 增量打包工具
 
 
 ## 安装
@@ -70,15 +70,15 @@ Specific options:
 
 ```shell
 $ cd upgrade-20200430
-$ ./update.sh [gitee-path]
+$ ./update.sh GITEE_PATH
 ```
 
-gitee-path: gitee-premium 的绝对路径
+GITEE_PATH: gitee-premium 的绝对路径
 
 示例
 
 ```shell
-$ ./update.sh /home/gite/gitee-premium/gitee
+$ ./update.sh /home/git/gitee-premium/gitee
 ```
 
 

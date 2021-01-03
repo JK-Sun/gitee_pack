@@ -3,31 +3,40 @@ module GiteePack
     class << self
       def cp_diff_files(files)
         files.each do |file|
-          dirname = File.join(Folder.upgrade_files_dir, File.dirname(file))
-          FileUtils.mkdir_p dirname
-          FileUtils.cp file, dirname
-          GiteePack.logger.debug "cp #{file} #{dirname}"
+          from = file
+          to   = File.join(Folder.upgrade_files_dir, File.dirname(file))
+          cp_file from, to
         end
       end
 
       def cp_webpack_files
-        dirname = File.join(Folder.upgrade_files_dir, 'public/webpacks')
-        FileUtils.mkdir_p dirname
-        FileUtils.cp_r 'public/webpacks/.', dirname
-        GiteePack.logger.debug "cp -r public/webpacks/. #{dirname}"
+        from = File.join(Folder.webpacks_dir, '.')
+        to   = File.join(Folder.upgrade_files_dir, Folder.webpacks_dir)
+        cp_file from, to
       end
 
       def cp_asset_files
-        dirname = File.join(Folder.upgrade_files_dir, 'public/assets')
-        FileUtils.mkdir_p dirname
-        FileUtils.cp_r 'public/assets/.', dirname
-        GiteePack.logger.debug "cp -r public/assets/. #{dirname}"
+        from = File.join(Folder.assets_dir, '.')
+        to   = File.join(Folder.upgrade_files_dir, Folder.assets_dir)
+        cp_file from, to
+      end
+
+      def cp_gems
+        from = File.join(Folder.bundle_cache_dir, '.')
+        to   = File.join(Folder.upgrade_files_dir, Folder.bundle_cache_dir)
+        cp_file from, to
       end
 
       def cp_update_file
-        filepath = File.join(File.expand_path('../../../', __FILE__), 'exe/update.sh')
-        FileUtils.cp filepath, Folder.upgrade_dir
-        GiteePack.logger.debug "cp #{filepath} #{Folder.upgrade_dir}"
+        from = File.join(File.expand_path('../../../', __FILE__), 'exe/update.sh')
+        to   =  Folder.upgrade_dir
+        cp_file from, to
+      end
+
+      def cp_file(from, to)
+        FileUtils.mkdir_p to
+        GiteePack.logger.debug "cp -r #{from} #{to}"
+        FileUtils.cp_r from, to
       end
 
       def g_file(path, content = [])
@@ -46,6 +55,10 @@ module GiteePack
 
       def g_commit_file(content = [])
         g_file(File.join(Folder.upgrade_dir, 'commit.txt'), content)
+      end
+
+      def g_log_file(content= [])
+        g_file(File.join(Folder.upgrade_dir, 'run.log'), content)
       end
     end
   end

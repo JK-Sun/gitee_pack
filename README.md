@@ -1,6 +1,7 @@
 # GiteePack
 
-一个GiteePremium增量打包工具
+一个 GiteePremium 增量打包工具
+
 
 ## 安装
 
@@ -8,19 +9,20 @@
 $ gem install gitee_pack
 ```
 
+
 ## 使用
 
 ### 打包
 
-在gitee-premium目录执行：
+在 gitee-premium 目录执行：
 
 ```shell
-$ gitee_pack [base] [head]
+$ gitee_pack BASE HEAD
 ```
 
-base: Commit提交的SHA值作为对比起点
+BASE: Commit提交的SHA值作为对比起点
 
-head: Commit提交的SHA值作为对比终点
+HEAD: Commit提交的SHA值作为对比终点
 
 示例：
 
@@ -37,26 +39,91 @@ upgrade-20200430
 ├── commit.txt         // 记录 base、head 的 CommitID
 ├── diff.txt           // 记录 base 和 head 之间的所有改动文件名称
 ├── delete.txt         // 记录 base 和 head 之间被删除的文件名称
+├── run.log            // 打包时的运行日志
 ├── files              // 用于存放代码文件的目录
 └── update.sh          // 部署脚本，更新代码时使用
 ```
 
+### 更多选项
+
+```
+$ gitee_pack --help
+Usage: gitee_pack BASE HEAD [options]
+
+Specific options:
+        --skip-compile-asset         Skip compile asset.
+        --skip-compile-webpack       Skip compile webpack.
+        --skip-package-gem           Skip package gem.
+    -h, --help                       Show this message.
+    -v, --version                    Show version info.
+```
+
+`--skip-compile-asset`   当有 asset 文件改动时，跳过 asset 资源文件编译
+
+`--skip-compile-webpack` 当有 vue 文件改动时，跳过 npm 资源文件编译
+
+`--skip-package-gem`     当有 gem 改动时，跳过 gem 打包
+
+### 错误值
+
+执行 gitee_pack 命令，错误值解释如下
+
+- `100` vue 资源文件编译失败
+- `101` asset 资源文件编译失败
+- `102` gem 打包失败
+- `200` 升级包不完整
+
 ### 部署
 
-在升级包中执行update.sh脚本，一键自动部署
+在升级包中执行 update.sh 脚本，一键自动部署
 
 ```shell
 $ cd upgrade-20200430
-$ ./update.sh [gitee-path]
+$ ./update.sh GITEE_PATH
 ```
 
-gitee-path: gitee-premium的绝对路径
+GITEE_PATH: gitee-premium 的绝对路径
 
 示例
 
 ```shell
-$ ./update.sh /home/gite/gitee-premium/gitee
+$ ./update.sh /home/git/gitee-premium/gitee
 ```
+
+
+## 版本变更
+
+### v1.5.0
+
+- feat: 支持打包完成后，检测包的完整性
+- feat: 支持跳过编译流程打包
+- feat: 支持新增、修改、删除 Gem 时自动打包
+- feat: 支持记录打包日志到升级包中
+- fix: 修复打包过程中失败，以非 0 值推出程序
+
+### v1.4.0
+
+- feat: 支持部署备份代码时过滤 tmp 目录（感谢@彭超越大佬）
+
+### v1.3.0
+
+- feat: 支持检测 asset 文件改动并自动编译及打包
+
+### v1.2.0
+
+- feat: 支持部署时代码备份功能
+- feat: 打包时记录 Commit 信息
+- fix: 修复部署脚本 Bug
+
+### v1.1.0
+
+- feat: 支持通过脚本自动化部署改动文件
+
+### v1.0.0
+
+- feat: 支持代码文件打包
+- feat: 支持检测 webpack 文件改动并自动编译及打包
+
 
 ## 常见问题
 
@@ -65,15 +132,3 @@ $ ./update.sh /home/gite/gitee-premium/gitee
 ```shell
 $ git config --global core.quotepath false
 ```
-
-## TODO
-
-- 支持gem打包
-- 打包完成后，检测包的完整性
-- 打包过程中失败，以非0值推出程序（主要表现为编译文件时失败）
-- ~~支持代码文件打包~~
-- ~~支持webpacks打包~~
-- ~~支持部署备份功能~~
-- ~~支持assets打包~~
-- ~~支持中文文件名打包~~
-- ~~支持备份代码过滤tmp目录~~

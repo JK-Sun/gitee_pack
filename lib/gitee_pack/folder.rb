@@ -24,6 +24,18 @@ module GiteePack
           GiteePack.logger.debug "rm -rf #{dir}"
         end
       end
+
+      def webpacks_dir
+        'public/webpacks/'
+      end
+
+      def assets_dir
+        'public/assets/'
+      end
+
+      def bundle_cache_dir
+        'vendor/cache/'
+      end
     end
   end
 end

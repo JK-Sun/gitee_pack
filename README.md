@@ -99,11 +99,11 @@ $ ./update.sh /home/git/gitee-premium/gitee
 - feat: 支持跳过编译流程打包
 - feat: 支持新增、修改、删除 Gem 时自动打包
 - feat: 支持记录打包日志到升级包中
-- fix: 修复打包过程中失败，以非0值推出程序
+- fix: 修复打包过程中失败，以非 0 值推出程序
 
 ### v1.4.0
 
-- feat: 支持部署备份代码时过滤 tmp 目录
+- feat: 支持部署备份代码时过滤 tmp 目录（感谢@彭超越大佬）
 
 ### v1.3.0
 
@@ -113,7 +113,6 @@ $ ./update.sh /home/git/gitee-premium/gitee
 
 - feat: 支持部署时代码备份功能
 - feat: 打包时记录 Commit 信息
-- feat: 支持中文文件名打包（见常见问题）
 - fix: 修复部署脚本 Bug
 
 ### v1.1.0
